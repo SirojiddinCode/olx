@@ -10,5 +10,5 @@ import lombok.ToString;
 @ToString
 public class ProfileJwtDto {
     private Integer id;
-    private ProfileRole role;
+    private String email;
 }

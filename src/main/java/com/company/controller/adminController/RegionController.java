@@ -1,20 +1,16 @@
 package com.company.controller.adminController;
 
 import com.company.dto.RegionDTO;
-import com.company.entity.RegionEntity;
 import com.company.enums.Language;
 import com.company.enums.ProfileRole;
 import com.company.service.RegionService;
 import com.company.util.JwtUtil;
 import io.swagger.annotations.*;
-import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -32,7 +28,7 @@ public class RegionController {
             @ApiResponse(code = 200,message = "Successfull",response =RegionDTO.class)
     })
     public ResponseEntity<RegionDTO> createRegion(@RequestBody RegionDTO dto, HttpServletRequest request) {
-        JwtUtil.getProfile(request, ProfileRole.Admin);
+        JwtUtil.getProfile(request, ProfileRole.ADMIN);
         RegionDTO result = regionService.createRegion(dto);
         return ResponseEntity.ok(result);
     }
@@ -41,7 +37,7 @@ public class RegionController {
     @ApiOperation(value = "update region method for admin")
     @ApiResponse(code = 200,message = "Successful",response = RegionDTO.class)
     public ResponseEntity<RegionDTO> updateRegion(@RequestBody RegionDTO dto,HttpServletRequest request){
-        JwtUtil.getProfile(request,ProfileRole.Admin);
+        JwtUtil.getProfile(request,ProfileRole.ADMIN);
         RegionDTO result=regionService.updateRegion(dto);
         return ResponseEntity.ok(result);
     }
@@ -51,7 +47,7 @@ public class RegionController {
     @ApiResponse(code = 200,message = "Successful",response = String.class)
     public ResponseEntity<String> deleteRegion(@ApiParam(value = "Id of Region",readOnly = true)
                                                    @PathVariable("id")Integer id, HttpServletRequest request){
-       JwtUtil.getProfile(request,ProfileRole.Admin);
+       JwtUtil.getProfile(request,ProfileRole.ADMIN);
        regionService.deleteRegion(id);
        return ResponseEntity.ok("Deleted");
     }

@@ -2,6 +2,7 @@ package com.company.config;
 
 import com.company.entity.ProfileEntity;
 import com.company.enums.ProfileStatus;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +18,7 @@ public class CustomUserDetail implements UserDetails {
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(profile.getRole().toString()));
+        return Collections.singletonList(new SimpleGrantedAuthority(profile.getRole().name()));
     }
 
     @Override
@@ -27,7 +28,7 @@ public class CustomUserDetail implements UserDetails {
 
     @Override
     public String getUsername() {
-        return profile.getLogin();
+        return profile.getEmail();
     }
 
     @Override
@@ -39,7 +40,10 @@ public class CustomUserDetail implements UserDetails {
     public boolean isAccountNonLocked() {
         return true;
     }
-
+    @Bean
+    public String getRole(){
+        return profile.getRole().name();
+    }
     @Override
     public boolean isCredentialsNonExpired() {
         return true;

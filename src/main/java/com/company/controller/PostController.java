@@ -8,6 +8,7 @@ import com.company.service.PostService;
 import com.company.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +24,9 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN','USER')")
     @PostMapping("/add_new_post")
     public ResponseEntity<PostDTO> createPost(@Valid @RequestBody PostDTO post, HttpServletRequest request) {
-        ProfileJwtDto profileJwtDto = JwtUtil.getProfile(request, ProfileRole.User);
         return null;
     }
 }

@@ -15,6 +15,7 @@ import com.company.exceptions.ItemNotFoundException;
 import com.company.repository.PostRepository;
 import com.company.spec.PostSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,7 @@ import java.util.Optional;
 
 @Service
 public class PostService {
+    @Lazy
     @Autowired
     private PostRepository postRepository;
     @Autowired
@@ -37,7 +39,7 @@ public class PostService {
     private RegionService regionService;
     @Autowired
     private CategoryService categoryService;
-
+    @Lazy
     @Autowired
     private PostAttachService postAttachService;
 

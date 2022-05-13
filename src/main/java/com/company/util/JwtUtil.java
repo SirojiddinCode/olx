@@ -12,14 +12,14 @@ import java.util.Date;
 public class JwtUtil {
     private final static String secretKey = "kalitso'z";
 
-    public static String createJwt(Integer id,ProfileRole role) {
+    public static String createJwt(Integer id,String email) {
         JwtBuilder jwtBuilder = Jwts.builder();
         jwtBuilder.setSubject(String.valueOf(id));
         jwtBuilder.setIssuedAt(new Date());
         jwtBuilder.signWith(SignatureAlgorithm.HS256, secretKey);
         jwtBuilder.setExpiration(new Date(System.currentTimeMillis() + (60 * 60 * 1000)));
         jwtBuilder.setIssuer("olx.com");
-        jwtBuilder.claim("role", role.name());
+        jwtBuilder.claim("email", email);
 
         String jwt = jwtBuilder.compact();
         return jwt;
@@ -45,10 +45,10 @@ public class JwtUtil {
 
         Claims claims = (Claims) jws.getBody();
         String id = claims.getSubject();
-        ProfileRole role = ProfileRole.valueOf((String) claims.get("role"));
+        String email= (String) claims.get("email");
         ProfileJwtDto jwtDto=new ProfileJwtDto();
         jwtDto.setId(Integer.parseInt(id));
-        jwtDto.setRole(role);
+        jwtDto.setEmail(email);
 
         return jwtDto;
     }
@@ -80,7 +80,7 @@ public class JwtUtil {
             throw new UnauthorizedException("Not authorized");
         }
 
-        if (!jwtDTO.getRole().equals(requiredRole)) {
+        if (!jwtDTO.getEmail().equals(requiredRole.name())) {
             throw new ForbiddenException("Forbidden exp");
         }
         return jwtDTO;

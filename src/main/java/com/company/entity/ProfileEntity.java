@@ -4,6 +4,7 @@ import com.company.enums.ProfileRole;
 import com.company.enums.ProfileStatus;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -23,9 +24,6 @@ public class ProfileEntity extends BaseEntity{
 
     @Column(name = "surname")
     private String surname;
-
-    @Column(name = "login")
-    private String login;
 
     @Column(name = "password")
     private String password;

@@ -12,6 +12,7 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,16 +26,17 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @PostMapping("/create_category/by_admin")
     @ApiOperation(value = "Create category for admin method")
     @ApiResponse(code = 200, message = "Successful", response = CategoryDTO.class)
     public HttpEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO dto,
                                                   HttpServletRequest request) {
-        JwtUtil.getProfile(request, ProfileRole.Admin);
+        //JwtUtil.getProfile(request, ProfileRole.Admin);
         CategoryDTO response = categoryService.createCategory(dto);
         return ResponseEntity.ok(response);
     }
-
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     @ApiOperation(value = "update category for admin")
     @ApiResponse(code = 200, message = "Successfull", response = CategoryDTO.class)
@@ -42,17 +44,17 @@ public class CategoryController {
                                               @PathVariable("id") Integer id,
                                               @RequestBody CategoryDTO dto,
                                               HttpServletRequest request) {
-        JwtUtil.getProfile(request, ProfileRole.Admin);
+//        JwtUtil.getProfile(request, ProfileRole.Admin);
         CategoryDTO response = categoryService.update(dto, id);
         return ResponseEntity.ok(response);
     }
-
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @DeleteMapping("/delete/")
     @ApiOperation(value = "Delete category for admin")
     @ApiResponse(code = 200, message = "Successfull", response = CategoryDTO.class)
     public HttpEntity<?> delete(@ApiParam(value = "Id of Category") @RequestParam("id") Integer id,
                                 HttpServletRequest request) {
-        JwtUtil.getProfile(request, ProfileRole.Admin);
+//        JwtUtil.getProfile(request, ProfileRole.Admin);
         categoryService.delete(id);
         return ResponseEntity.ok("Deleted");
     }

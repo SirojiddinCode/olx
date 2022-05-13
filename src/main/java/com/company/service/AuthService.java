@@ -12,7 +12,6 @@ import com.company.exceptions.BadRequestException;
 import com.company.exceptions.ItemNotFoundException;
 import com.company.repository.ProfileRepository;
 import com.company.util.JwtUtil;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,7 +38,7 @@ public class AuthService {
         entity.setPassword(pswd);
         entity.setCreatedDate(LocalDateTime.now());
         entity.setStatus(ProfileStatus.CREATED);
-        entity.setRole(ProfileRole.User);
+        entity.setRole(ProfileRole.USER);
         profileRepository.save(entity);
         Messagedto messagedto = new Messagedto();
         messagedto.setCreatedDate(LocalDateTime.now());
@@ -79,7 +78,7 @@ public class AuthService {
                 profileDTO.setEmail(entity.getEmail());
                 profileDTO.setPswd(entity.getPassword());
                 profileDTO.setId(entity.getId());
-                profileDTO.setJwtTooken(JwtUtil.createJwt(entity.getId(), entity.getRole()));
+                profileDTO.setJwtTooken(JwtUtil.createJwt(entity.getId(), entity.getEmail()));
                 return profileDTO;
             } else throw new BadRequestException("Password is invalid");
         }
