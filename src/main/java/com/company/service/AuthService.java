@@ -38,7 +38,7 @@ public class AuthService {
         entity.setPassword(pswd);
         entity.setCreatedDate(LocalDateTime.now());
         entity.setStatus(ProfileStatus.CREATED);
-        entity.setRole(ProfileRole.USER);
+        entity.setRole(ProfileRole.ADMIN);
         profileRepository.save(entity);
         Messagedto messagedto = new Messagedto();
         messagedto.setCreatedDate(LocalDateTime.now());

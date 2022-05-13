@@ -26,7 +26,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @PreAuthorize(value = "hasRole('ADMIN')")
+   // @PreAuthorize(value = "hasRole('ADMIN')")
     @PostMapping("/create_category/by_admin")
     @ApiOperation(value = "Create category for admin method")
     @ApiResponse(code = 200, message = "Successful", response = CategoryDTO.class)

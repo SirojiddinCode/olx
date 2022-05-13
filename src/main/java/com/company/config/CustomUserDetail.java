@@ -40,10 +40,6 @@ public class CustomUserDetail implements UserDetails {
     public boolean isAccountNonLocked() {
         return true;
     }
-    @Bean
-    public String getRole(){
-        return profile.getRole().name();
-    }
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
